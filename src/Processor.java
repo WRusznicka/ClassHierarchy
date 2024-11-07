@@ -45,4 +45,10 @@ public class Processor {
     public void setCache(String cache) {
         this.cache = cache;
     }
+
+    @Override
+    public String toString() {
+        return "\n\nProcessor\n\nModel: " + getModel() + "\nMaximum frequency: " + getMaxFrequency() +
+                "GHz\nNumber of cores: " + getNumberOfCores() + "\nCache: " + getCache();
+    }
 }

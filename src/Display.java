@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Display {
     private String resolution;
     private String type;
@@ -44,5 +46,24 @@ public class Display {
 
     public void setSize(float size) {
         this.size = size;
+    }
+
+    @Override
+    public String toString() {
+        return "\n\nDisplay\n\nResolution: " + getResolution() + "\nType: " + getType() +
+                "\nRefresh rate: " + getRefreshRate() + "Hz\nSize: " + getSize() + " inches";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Display display = (Display) o;
+        return refreshRate == display.refreshRate && Float.compare(size, display.size) == 0 && Objects.equals(resolution, display.resolution) && Objects.equals(type, display.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(resolution, type, refreshRate, size);
     }
 }

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Battery {
     private String material;
     private int numberOfCells;
@@ -34,5 +36,24 @@ public class Battery {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    @Override
+    public String toString() {
+        return "\n\nBattery\n\nMaterial: " + getMaterial() +
+                "\nNumber of cells: " + getNumberOfCells() + "\nCapacity: " + getCapacity() + "WHrs";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Battery battery = (Battery) o;
+        return numberOfCells == battery.numberOfCells && capacity == battery.capacity && Objects.equals(material, battery.material);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(material, numberOfCells, capacity);
     }
 }
