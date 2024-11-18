@@ -1,3 +1,5 @@
+package entities;
+
 public class Processor {
     private String model;
     private float maxFrequency;

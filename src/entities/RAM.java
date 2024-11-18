@@ -1,6 +1,11 @@
+package entities;
+
+import interfaces.ICheckUsage;
+import interfaces.Upgradable;
+
 import java.util.Objects;
 
-public class RAM {
+public class RAM implements Upgradable, ICheckUsage {
     private int capacity;
     private String type;
 
@@ -44,5 +49,26 @@ public class RAM {
     @Override
     public int hashCode() {
         return Objects.hash(capacity, type);
+    }
+
+    @Override
+    public boolean isUpgradable() {
+        return true;
+    }
+
+    @Override
+    public void upgrade(int additionalSize) {
+        if(isUpgradable()){
+            capacity += additionalSize;
+            successUpgrade();
+        }
+        else{
+            System.out.println("RAM can not be upgraded");
+        }
+    }
+
+    @Override
+    public void checkUsage() {
+        System.out.println("Checking RAM usage...");
     }
 }

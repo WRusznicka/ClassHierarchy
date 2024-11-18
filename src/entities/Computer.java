@@ -1,4 +1,6 @@
-public abstract class Computer {
+package entities;
+
+public abstract class Computer{
     private String model;
     private String type;
     protected Display display;
@@ -6,6 +8,7 @@ public abstract class Computer {
     protected  Processor processor;
     protected  RAM ram;
     protected  Storage storage;
+    protected Warranty warranty;
 
     public Computer(String model, String type, Display display, Graphics graphics, Processor processor, RAM ram, Storage storage) {
         this.model = model;
@@ -15,6 +18,7 @@ public abstract class Computer {
         this.processor = processor;
         this.ram = ram;
         this.storage = storage;
+        this.warranty = new Warranty();
     }
 
     public Computer() {
@@ -42,5 +46,9 @@ public abstract class Computer {
     }
 
     public abstract String getSpecifications();
+
+    public void showWarranty(){
+        this.warranty.showWarranty();
+    }
 
 }

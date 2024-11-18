@@ -1,3 +1,5 @@
+import entities.*;
+import interfaces.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,11 +10,25 @@ public class Main {
         RAM ram = new RAM (32, "LPDDR5X");
         Storage storage = new Storage("1 TB", "SSD");
 
+        System.out.println("The amount of laptops is " + Laptop.count);
+
         Computer laptop = new Laptop("ASUS Zenbook S 13 OLED (UX5304)", "Ultrabook", display, graphics, processor, ram, storage, battery);
         Computer desktop = new Desktop("HP EliteDesk 800", "Desktop", display, graphics, processor, ram, storage, true);
 
+        Warranty.checkWarranty();
+
         printSpecifications(laptop);
+        laptop.showWarranty();
         printSpecifications(desktop);
+        desktop.showWarranty();
+
+        Connectable connectiableLaptop = new Laptop("ASUS Zenbook S 13 OLED (UX5304)", "Ultrabook", display, graphics, processor, ram, storage, battery);
+        Connectable connectiableDesktop = new Desktop("HP EliteDesk 800", "entities.Desktop", display, graphics, processor, ram, storage, true);
+
+        connect(connectiableLaptop);
+        connect(connectiableDesktop);
+
+        System.out.println("The amount of laptops is " + Laptop.count);
 
         Battery batteryToCompare = new Battery("Li-ion", 4, 63);
         Display displayToCompare = new Display("2880 x 1800", "OLED", 60, 16.0f);
@@ -34,5 +50,9 @@ public class Main {
 
     public static void printSpecifications(Computer computer){
         System.out.println("\n\n" + computer.getSpecifications());
+    }
+
+    public static void connect(Connectable connectable){
+        connectable.connectToWiFi("HomeWiFi");
     }
 }

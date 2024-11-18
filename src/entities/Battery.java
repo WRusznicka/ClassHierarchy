@@ -1,6 +1,10 @@
+package entities;
+
+import interfaces.Replaceable;
+
 import java.util.Objects;
 
-public class Battery {
+public class Battery implements Replaceable {
     private String material;
     private int numberOfCells;
     private int capacity;
@@ -55,5 +59,10 @@ public class Battery {
     @Override
     public int hashCode() {
         return Objects.hash(material, numberOfCells, capacity);
+    }
+
+    @Override
+    public boolean isReplaceable() {
+        return true;
     }
 }
