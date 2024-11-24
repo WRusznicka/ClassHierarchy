@@ -1,5 +1,6 @@
 package entities;
 
+import exceptions.InvalidRAMCapacity;
 import interfaces.ICheckUsage;
 import interfaces.Upgradable;
 
@@ -21,7 +22,10 @@ public class RAM implements Upgradable, ICheckUsage {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(int capacity) throws InvalidRAMCapacity {
+        if (capacity <= 0 || capacity > 128 ){
+            throw new InvalidRAMCapacity();
+        }
         this.capacity = capacity;
     }
 

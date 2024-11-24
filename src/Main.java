@@ -1,5 +1,9 @@
 import entities.*;
 import interfaces.*;
+import exceptions.*;
+
+import java.io.*;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,11 +12,53 @@ public class Main {
         Graphics graphics = new Graphics("Intel Graphics");
         Processor processor = new Processor("Intel Core Ultra 7 14gen 155U", 4.8f, 12, "12 MB");
         RAM ram = new RAM (32, "LPDDR5X");
-        Storage storage = new Storage("1 TB", "SSD");
+
+        Storage storage= new Storage();
+        storage.setCapacity("1 TB");
+        storage.setType("SSD");
+
+        try{
+        storage = new Storage("", "UNDEFINED");
+        } catch (InvalidCapacity e) {
+            System.out.println("Invalid capacity!");
+        } catch (InvalidStorageType e){
+            System.out.println("Invalid storage type!");
+        }
+
+        try {
+            ram.setCapacity(0);
+
+        }catch (InvalidRAMCapacity e){
+            System.out.println("Invalid capacity! RAM capacity has not been changed.");
+        }
+
+        try {
+            battery.setNumberOfCells(0);
+
+        }catch (InvalidNumberOfCells e){
+            System.out.println("Invalid number of cells! Number of cells has not been changed.");
+        }
+
+        try {
+            display.setSize(0.0f);
+
+        }catch (InvalidSize e){
+            System.out.println("Invalid size of display! Size of display has not been changed.");
+        }
+
+        String fileName = "src/resources/Laptop.txt";
 
         System.out.println("The amount of laptops is " + Laptop.count);
 
-        Computer laptop = new Laptop("ASUS Zenbook S 13 OLED (UX5304)", "Ultrabook", display, graphics, processor, ram, storage, battery);
+        Computer laptop;
+
+        try {
+            ArrayList<String> data = getDataFromFile(fileName);
+            laptop = new Laptop(data.get(0), data.get(1), display, graphics, processor, ram, storage, battery);
+        }catch (EmptyFileException | IndexOutOfBoundsException e){
+            laptop = new Laptop("ASUS Zenbook S 13 OLED (UX5304)", "Ultrabook", display, graphics, processor, ram, storage, battery);
+        }
+
         Computer desktop = new Desktop("HP EliteDesk 800", "Desktop", display, graphics, processor, ram, storage, true);
 
         Warranty.checkWarranty();
@@ -34,7 +80,7 @@ public class Main {
         Display displayToCompare = new Display("2880 x 1800", "OLED", 60, 16.0f);
         Graphics graphicsToCompare = new Graphics("Intel Graphics");
         RAM ramToCompare = new RAM (16, "LPDDR5X");
-        Storage storageToCompare = new Storage("1 TB", "SSD");
+        Storage storageToCompare = new Storage();
 
         System.out.println("\n\nBattery hash code: " + battery.hashCode() + "\nBattery 2 hash code: " + batteryToCompare.hashCode());
         System.out.println("\nComparation: " + battery.equals(batteryToCompare));
@@ -54,5 +100,25 @@ public class Main {
 
     public static void connect(Connectable connectable){
         connectable.connectToWiFi("HomeWiFi");
+    }
+
+    public static ArrayList<String> getDataFromFile(String fileName) throws EmptyFileException {
+        ArrayList<String> data = new ArrayList<>();
+
+        try (FileReader fileReader = new FileReader(fileName);
+             BufferedReader reader = new BufferedReader(fileReader)){
+            String line = reader.readLine();
+            if(line == null){
+                throw new EmptyFileException();
+            }
+            else{
+                data.add(line);
+                data.add(reader.readLine());
+            }
+        } catch (Exception e) {
+            System.out.println("File not found or an error occurred while opening file.");
+        }
+
+        return data;
     }
 }

@@ -1,5 +1,7 @@
 package entities;
 
+import exceptions.InvalidCapacity;
+import exceptions.InvalidNumberOfCells;
 import interfaces.Replaceable;
 
 import java.util.Objects;
@@ -30,7 +32,10 @@ public class Battery implements Replaceable {
         return numberOfCells;
     }
 
-    public void setNumberOfCells(int numberOfCells) {
+    public void setNumberOfCells(int numberOfCells) throws InvalidNumberOfCells {
+        if(numberOfCells <= 0){
+            throw new InvalidNumberOfCells();
+        }
         this.numberOfCells = numberOfCells;
     }
 
@@ -38,7 +43,10 @@ public class Battery implements Replaceable {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(int capacity)throws InvalidCapacity {
+        if (capacity <= 0){
+            throw new InvalidCapacity();
+        }
         this.capacity = capacity;
     }
 

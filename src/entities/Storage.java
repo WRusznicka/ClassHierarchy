@@ -1,12 +1,21 @@
 package entities;
 
+import exceptions.InvalidCapacity;
+import exceptions.InvalidStorageType;
+
 import java.util.Objects;
 
 public class Storage {
     private String capacity;
     private String type;
 
-    public Storage(String capacity, String type) {
+    public Storage(String capacity, String type) throws InvalidCapacity, InvalidStorageType {
+        if (capacity.startsWith("-") || capacity.isEmpty()){
+            throw new InvalidCapacity();
+        }
+        if (!(type.equalsIgnoreCase("HDD") || (type.equalsIgnoreCase("SSD"))) || type.isEmpty()){
+            throw new InvalidStorageType();
+        }
         this.capacity = capacity;
         this.type = type;
     }

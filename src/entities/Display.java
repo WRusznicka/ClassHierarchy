@@ -1,5 +1,7 @@
 package entities;
 
+import exceptions.InvalidSize;
+
 import java.util.Objects;
 
 public class Display {
@@ -46,7 +48,10 @@ public class Display {
         return size;
     }
 
-    public void setSize(float size) {
+    public void setSize(float size) throws InvalidSize {
+        if(size <= 0.0) {
+            throw new InvalidSize();
+        }
         this.size = size;
     }
 
