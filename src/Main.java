@@ -96,6 +96,17 @@ public class Main {
 
         processor.clearCache();
         processor.getDatesCacheCleared();
+
+        CustomLinkedList<Computer> computersCreated = new CustomLinkedList<>();
+        System.out.println("List is created. Is it empty? " + computersCreated.isEmpty());
+        System.out.println("Added element... ");
+        computersCreated.add(laptop);
+        System.out.println("Is list empty? " + computersCreated.isEmpty());
+        System.out.println(computersCreated.getFirst().getSpecifications());
+        computersCreated.add(desktop);
+        System.out.println("The amount of elements in list is: " + computersCreated.getSize());
+        computersCreated.printList();
+
         /* //printing comparation results
         System.out.println("\n\nBattery hash code: " + battery.hashCode() + "\nBattery 2 hash code: " + batteryToCompare.hashCode());
         System.out.println("\nComparation: " + battery.equals(batteryToCompare));

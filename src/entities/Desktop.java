@@ -29,6 +29,11 @@ public class Desktop extends Computer implements Connectable, Customizable {
     }
 
     @Override
+    public String toString() {
+        return getSpecifications();
+    }
+
+    @Override
     public void connectToWiFi(String networkName) {
         System.out.println("Desktop is connected to WiFi: " + networkName);
     }

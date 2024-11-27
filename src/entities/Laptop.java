@@ -24,6 +24,11 @@ public class Laptop extends Computer implements Connectable, Customizable {
     }
 
     @Override
+    public String toString() {
+        return getSpecifications();
+    }
+
+    @Override
     public void connectToWiFi(String networkName) {
         System.out.println("Laptop is connected to WiFi: " + networkName + ".");
     }
