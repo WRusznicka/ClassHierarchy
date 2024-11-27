@@ -1,10 +1,15 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class Processor {
     private String model;
     private float maxFrequency;
     private int numberOfCores;
     private String cache;
+    public List<Date> datesCacheCleared = new ArrayList<>();
 
     public Processor(String model, float maxFrequency, int numberOfCores, String cache) {
         this.model = model;
@@ -53,4 +58,18 @@ public class Processor {
         return "\n\nProcessor\n\nModel: " + getModel() + "\nMaximum frequency: " + getMaxFrequency() +
                 "GHz\nNumber of cores: " + getNumberOfCores() + "\nCache: " + getCache();
     }
+
+    public void clearCache(){
+        setCache("0");
+        datesCacheCleared.add(new Date());
+        System.out.println("Cache has been cleared");
+    }
+
+    public void getDatesCacheCleared(){
+        System.out.println("Cache has been cleared on that days: ");
+        for(Date d: datesCacheCleared){
+            System.out.println(d);
+        }
+    }
+
 }

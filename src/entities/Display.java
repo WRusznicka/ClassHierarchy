@@ -2,19 +2,44 @@ package entities;
 
 import exceptions.InvalidSize;
 
+import java.util.Iterator;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Display {
     private String resolution;
     private String type;
     private int refreshRate;
     private float size;
+    private final static Set<Float> sizes = new TreeSet<>();
+
+    static
+    {
+        sizes.add(13.3f);
+        sizes.add(14f);
+        sizes.add(16f);
+        sizes.add(40f);
+        sizes.add(17.3f);
+        sizes.add(19f);
+        sizes.add(24f);
+        sizes.add(27f);
+        sizes.add(32f);
+        sizes.add(15.6f);
+    }
 
     public Display(String resolution, String type, int refreshRate, float size) {
         this.resolution = resolution;
         this.type = type;
         this.refreshRate = refreshRate;
-        this.size = size;
+        if(sizes.contains(size)){
+            this.size = size;
+        }
+        else{
+            System.out.println("Acceptable sizes are (in sorted order): ");
+            getSizes();
+            this.size = 14f;
+        }
     }
 
     public Display() {
@@ -53,6 +78,14 @@ public class Display {
             throw new InvalidSize();
         }
         this.size = size;
+    }
+
+    public void getSizes(){
+        Iterator<Float> iterator = sizes.iterator();
+        while(iterator.hasNext()){
+            System.out.print(iterator.next() + ", ");
+        }
+        System.out.println();
     }
 
     @Override

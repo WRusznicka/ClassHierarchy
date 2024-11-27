@@ -4,14 +4,20 @@ import exceptions.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        List<Battery> batteries = new ArrayList<>();
+
         Battery battery = new Battery("Li-ion", 4, 63);
-        Display display = new Display("2880 x 1800", "OLED", 60, 13.3f);
+        batteries.add(battery);
+
+        Display display = new Display("2880 x 1800", "OLED", 60, 13f);
         Graphics graphics = new Graphics("Intel Graphics");
         Processor processor = new Processor("Intel Core Ultra 7 14gen 155U", 4.8f, 12, "12 MB");
-        RAM ram = new RAM (32, "LPDDR5X");
+        RAM ram = new RAM (32, "LPDDR5");
+        System.out.println("Dodano RAM:" + ram.toString() + "\nCould created RAM be upgrated by 4 GB? \n" + ram.isUpgradable());
 
         Storage storage= new Storage();
         storage.setCapacity("1 TB");
@@ -77,11 +83,20 @@ public class Main {
         System.out.println("The amount of laptops is " + Laptop.count);
 
         Battery batteryToCompare = new Battery("Li-ion", 4, 63);
+        batteries.add(batteryToCompare);
         Display displayToCompare = new Display("2880 x 1800", "OLED", 60, 16.0f);
         Graphics graphicsToCompare = new Graphics("Intel Graphics");
-        RAM ramToCompare = new RAM (16, "LPDDR5X");
+        RAM ramToCompare = new RAM (16, "LPDDR5");
         Storage storageToCompare = new Storage();
 
+        System.out.println("Amount of batteries added: " + batteries.size());
+        for (Battery b: batteries){
+            System.out.println(b.toString());
+        }
+
+        processor.clearCache();
+        processor.getDatesCacheCleared();
+        /* //printing comparation results
         System.out.println("\n\nBattery hash code: " + battery.hashCode() + "\nBattery 2 hash code: " + batteryToCompare.hashCode());
         System.out.println("\nComparation: " + battery.equals(batteryToCompare));
         System.out.println("\n\nDisplay hash code: " + display.hashCode() + "\nDisplay 2 hash code: " + displayToCompare.hashCode());
@@ -92,6 +107,7 @@ public class Main {
         System.out.println("\nComparation: " + ram.equals(ramToCompare));
         System.out.println("\n\nStorage hash code: " + storage.hashCode() + "\nStorage 2 hash code: " + storageToCompare.hashCode());
         System.out.println("\nComparation: " + storage.equals(storageToCompare));
+         */
     }
 
     public static void printSpecifications(Computer computer){

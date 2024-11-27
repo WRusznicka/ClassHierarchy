@@ -4,15 +4,30 @@ import exceptions.InvalidRAMCapacity;
 import interfaces.ICheckUsage;
 import interfaces.Upgradable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class RAM implements Upgradable, ICheckUsage {
     private int capacity;
+    private int maxCapacity;
     private String type;
+    private static final Map<String,Integer> maxCapacityByType = new HashMap<>();
+
+    static{
+        maxCapacityByType.put("DDR", 4);
+        maxCapacityByType.put("DDR2", 8);
+        maxCapacityByType.put("DDR3", 32);
+        maxCapacityByType.put("DDR4", 64);
+        maxCapacityByType.put("DDR5", 128);
+        maxCapacityByType.put("LPDDR4", 32);
+        maxCapacityByType.put("LPDDR5", 64);
+    }
 
     public RAM(int capacity, String type) {
         this.capacity = capacity;
         this.type = type;
+        this.maxCapacity = maxCapacityByType.get(type.toUpperCase());
     }
 
     public RAM() {
@@ -57,12 +72,17 @@ public class RAM implements Upgradable, ICheckUsage {
 
     @Override
     public boolean isUpgradable() {
-        return true;
+        if(maxCapacity-capacity>0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
     public void upgrade(int additionalSize) {
-        if(isUpgradable()){
+        if(isUpgradable() && ((capacity+additionalSize)<maxCapacity)){
             capacity += additionalSize;
             successUpgrade();
         }

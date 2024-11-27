@@ -4,16 +4,18 @@ import exceptions.InvalidCapacity;
 import exceptions.InvalidStorageType;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class Storage {
     private String capacity;
     private String type;
+    private final Set<String> types = Set.of("HDD","SSD");
 
     public Storage(String capacity, String type) throws InvalidCapacity, InvalidStorageType {
         if (capacity.startsWith("-") || capacity.isEmpty()){
             throw new InvalidCapacity();
         }
-        if (!(type.equalsIgnoreCase("HDD") || (type.equalsIgnoreCase("SSD"))) || type.isEmpty()){
+        if (!types.contains(type.toUpperCase())){
             throw new InvalidStorageType();
         }
         this.capacity = capacity;
